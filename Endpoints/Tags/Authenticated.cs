@@ -23,15 +23,29 @@ namespace InstaSharp.Endpoints.Tags {
         }
 
         public MediasResponse Recent(string tagName) {
-            return _unauthenticated.Recent(tagName);
+            return Recent(tagName, 15, null, null);
         }
 
         public MediasResponse Recent(string tagName, string min_id, string max_id) {
-            return _unauthenticated.Recent(tagName, min_id, max_id);
+            return Recent(tagName, 15, min_id, max_id);
+        }
+
+        public MediasResponse Recent(string tagName, int count, string min_id, string max_id) {
+            return (MediasResponse)Mapper.Map<MediasResponse>(RecentJson(tagName, min_id, max_id, count));
         }
 
         public TagsResponse Search(string searchTerm) {
             return _unauthenticated.Search(searchTerm);
+        }
+
+        private string RecentJson(string tagName, string min_id, string max_id, int count)
+        {
+            string uri = string.Format(base.Uri + "{0}/media/recent?client_id={1}&count={2}", tagName, InstagramConfig.ClientId, count);
+            if (!string.IsNullOrEmpty(min_id)) uri += "&min_tag_id=" + min_id;
+            if (!string.IsNullOrEmpty(max_id)) uri += "&max_tag_id=" + max_id;
+            if (this.AuthInfo != null) uri += "&access_token=" + this.AuthInfo.Access_Token;
+
+            return HttpClient.GET(uri);
         }
     }
 }

@@ -8,6 +8,5 @@ namespace InstaSharp {
     public class AuthInfo {
         public string Access_Token { get; set; }
         public UserInfo User { get; set; }
-        public InstagramConfig Config { get; set; }
     }
 }
