@@ -11,5 +11,11 @@ namespace InstaSharp.Model {
         
         [JsonMapping("next_max_id", JsonMapping.MappingType.Primitive)]
         public string NextMaxId { get; set; }
+
+        [JsonMapping("min_tag_id", JsonMapping.MappingType.Primitive)]
+        public string MinTagId { get; set; }
+
+        [JsonMapping("next_max_tag_id", JsonMapping.MappingType.Primitive)]
+        public string NextMaxTagId { get; set; }
     }
 }
